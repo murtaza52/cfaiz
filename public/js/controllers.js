@@ -22,10 +22,14 @@ function LanesCtrl($scope, $rootScope, buttonBar) {
 }
 LanesCtrl.$inject = ['$scope', '$rootScope'];
 
-function LoginCtrl($scope, openid){
+function LoginCtrl($scope, openid, authorization){
   $scope.signin = function(provider){
     openid.authenticate(provider);
   };
+
+  $scope.me = "hello";
+
+  $scope.auth = authorization.getAuthMap;
 }
 
-LoginCtrl.$inject = ['$scope', 'openid'];
+LoginCtrl.$inject = ['$scope', 'openid', 'authorization'];

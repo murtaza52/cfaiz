@@ -4,7 +4,7 @@
 // Declare app level module which depends on filters, and services
 var app = angular.module('mod', ['ui','UIServices','myApp.filters', 'myApp.services', 'myApp.directives', 'btnbar.directive']).
   config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/lanes', {templateUrl: 'partials/lanes.html', controller: LanesCtrl});
+    $routeProvider.when('/index', {templateUrl: 'partials/lanes.html', controller: LanesCtrl});
     $routeProvider.otherwise({redirectTo: '/lanes'});
   }]);
 
