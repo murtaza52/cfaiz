@@ -1,7 +1,7 @@
 (ns faiz.api
-  (:require [datomic.api :as datomic])
-  (:use [faiz.datomic :as dt]
-        [clojure.pprint]))
+  (:require [datomic.api :as d]
+            [faiz.datomic :as dt])
+  (:use [clojure.pprint]))
 
 (def uri (atom "datomic:mem://faiz"))
 
@@ -17,15 +17,35 @@
 (dt/refresh-schema schema-path)
 (dt/refresh-schema data-path)
 
-(def t (dt/trans [{:db/id #db/id[:db.part/user -1000001]
-                     :address/city "Poona"
-                     :address/area "Salunke Vihaar"
-                     :address/building "GV Gardens"
-                     :address/flat "206"
-                     }]))
+(def tempid (atom nil))
 
-(pprint t)
+(defn get-tempid
+  []
+  (reset! tempid (d/tempid :db.part/user)))
 
+(defn cr-en
+  [m temp-id]
+  (let [{:keys [db-after tempids]} (dt/trans [(assoc m :db/id temp-id)])
+        id (d/resolve-tempid db-after tempids temp-id)
+        en (d/entity db-after id)]
+    {:id id :entity en}))
+
+(def m {:thaali/address 17592186045430
+  :thaali/size :thaali.size/half
+  :thaali/num "21"
+  :common/hijri-year 1434
+  :common/hijri-month "Rabi ul Awwal"
+  :common/gregorian-year 2013
+  :common/gregorian-month "December"})
+
+(def e (cr-en m
+              (d/tempid :db.part/user)))
+
+(println (-> e :entity :common/hijri-month))
+
+(println (:entity e))
+
+(println (-> e :entity :thaali/address :address/flat))
 ;; a mumin is related to a thaali and an address
 ;; An array of thaali-details and hub-details for each month
 (def mumin [:mumin/first-name

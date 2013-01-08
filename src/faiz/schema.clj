@@ -187,7 +187,6 @@
  :db/ident :thaali/num
  :db/valueType :db.type/string
  :db/cardinality :db.cardinality/one
- :db/unique :db.unique/identity
  :db/doc "Thaali Number"
  :db.install/_attribute :db.part/db}
 

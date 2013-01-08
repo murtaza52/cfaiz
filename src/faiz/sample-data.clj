@@ -10,8 +10,8 @@
  ;;thaali
  {:db/id #db/id[:db.part/user -1000002]
   :thaali/address #db/id[:db.part/user -1000001]
-  :thaali/size :db/ident :thaali.size/half
-  :thaali/num 21
+  :thaali/size :thaali.size/half
+  :thaali/num "21"
   :common/hijri-year 1434
   :common/hijri-month "Moharram"
   :common/gregorian-year 2013
@@ -19,8 +19,8 @@
 
  {:db/id #db/id[:db.part/user -1000003]
   :thaali/address #db/id[:db.part/user -1000001]
-  :thaali/size :db/ident :thaali.size/half
-  :thaali/num 21
+  :thaali/size :thaali.size/half
+  :thaali/num "21"
   :common/hijri-year 1434
   :common/hijri-month "Rabi ul Awwal"
   :common/gregorian-year 2013
