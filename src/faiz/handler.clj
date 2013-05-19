@@ -11,17 +11,21 @@
                              [credentials :as creds]
                              [openid :as openid])))
 
-(mustache/deftemplate index (slurp "public/index-async.html"))
+;;(mustache/deftemplate index (slurp "public/index-async.html"))
 
-(def index-data {:title "Invoize." :brand "Faiz" :links [{:url "#/students" :text "Students"} {:url "#/thaalis" :text "Thaalis"}]})
+;;(def index-data {:title "Invoize." :brand "Faiz" :links [{:url "#/students" :text "Students"} {:url "#/thaalis" :text "Thaalis"}]})
+
+(def file-options {:root "yeoman/app"})
 
 (defroutes app-routes
-  (GET "/" [] (resp/redirect "/login"))
-  (GET "/login" request (if (friend/identity request)(resp/redirect "/index")(resp/file-response "landing.html" {:root "public"})))
-  (GET "/index" [] (friend/authenticated (resp/file-response "index-async.html" {:root "public"})))
+  (GET "/" [] (resp/redirect "/landing"))
+  (GET "/landing" request (if (friend/identity request)
+                            (resp/redirect "/home")
+                            (resp/file-response "views/landing.html" file-options)))
+  (GET "/home" [] (friend/authenticated (resp/file-response "views/home.html" file-options)))
   (friend/logout (ANY "/logout" request (resp/redirect "/")))
   (GET "/authmap" [] (json-response {:account-manager {:WD [1234, 1423], :Tyco [3211, 2345]}}))
-  (route/files "/" {:root "public"})
+  (route/files "/" file-options)
   (route/not-found "Not Found"))
 
 (defn wrap-print-session [handler]

@@ -1,88 +1,104 @@
 [
- ;;Mumin
+ ;;Person
 
  {:db/id #db/id[:db.part/db]
-  :db/ident :mumin/first-name
+  :db/ident :person/first-name
   :db/valueType :db.type/string
   :db/cardinality :db.cardinality/one
   :db/fulltext true
-  :db/doc "A person's name"
+  :db/doc "A person's first name"
   :db.install/_attribute :db.part/db}
 
   {:db/id #db/id[:db.part/db]
-  :db/ident :mumin/middle-name
+  :db/ident :person/middle-name
   :db/valueType :db.type/string
   :db/cardinality :db.cardinality/one
   :db/fulltext true
-  :db/doc "A person's name"
+  :db/doc "A person's middle name"
   :db.install/_attribute :db.part/db}
 
   {:db/id #db/id[:db.part/db]
-  :db/ident :mumin/last-name
+  :db/ident :person/last-name
   :db/valueType :db.type/string
   :db/cardinality :db.cardinality/one
   :db/fulltext true
-  :db/doc "A person's name"
+  :db/doc "A person's last name"
   :db.install/_attribute :db.part/db}
 
  {:db/id #db/id[:db.part/db]
-  :db/ident :mumin/its-jamaat
+  :db/ident :person/its-jamaat
   :db/valueType :db.type/string
   :db/cardinality :db.cardinality/one
   :db/doc "Jamaat in which the ITS ID is registered"
   :db.install/_attribute :db.part/db}
 
  {:db/id #db/id[:db.part/db]
-  :db/ident :mumin/watan
+  :db/ident :person/watan
   :db/valueType :db.type/string
   :db/cardinality :db.cardinality/one
   :db/doc "Watan"
   :db.install/_attribute :db.part/db}
 
 {:db/id #db/id[:db.part/db]
-  :db/ident :mumin/its
-  :db/valueType :db.type/string
+  :db/ident :person/its
+  :db/valueType :db.type/long
   :db/cardinality :db.cardinality/one
   :db/unique :db.unique/identity
   :db/doc "ITS (Ejamaat) ID"
   :db.install/_attribute :db.part/db}
 
  {:db/id #db/id[:db.part/db]
-  :db/ident :mumin/sabil
+  :db/ident :person/sabil
   :db/valueType :db.type/string
   :db/cardinality :db.cardinality/one
   :db/doc "Sabil Number"
   :db.install/_attribute :db.part/db}
 
 {:db/id #db/id[:db.part/db]
-  :db/ident :mumin/openid-token
+  :db/ident :person/email
   :db/valueType :db.type/string
   :db/cardinality :db.cardinality/many
-  :db/doc "The id / token returned by the Open ID Provider"
+  :db/unique :db.unique/identity
+  :db/doc "Email Addresses of the person."
   :db.install/_attribute :db.part/db}
 
 {:db/id #db/id[:db.part/db]
- :db/ident :mumin/address
+  :db/ident :person/mobile
+  :db/valueType :db.type/long
+  :db/cardinality :db.cardinality/many
+  :db/unique :db.unique/identity
+  :db/doc "Mobile numbers of the person."
+  :db.install/_attribute :db.part/db}
+
+{:db/id #db/id[:db.part/db]
+  :db/ident :person/openid-token
+  :db/valueType :db.type/string
+  :db/cardinality :db.cardinality/one
+  :db/doc "The id / token returned by the Open ID Provider"
+  :db.instal/_attribute :db.part/db}
+
+{:db/id #db/id[:db.part/db]
+ :db/ident :person/address
  :db/valueType :db.type/ref
  :db/cardinality :db.cardinality/one
  :db/doc "Address of the person"
  :db.install/_attribute :db.part/db}
 
-{:db/id #db/id[:db.part/db]
- :db/ident :mumin/thaali-details
- :db/valueType :db.type/ref
- :db/cardinality :db.cardinality/many
- :db/doc "Array of thaali details for each month for each thaali."
- :db.install/_attribute :db.part/db}
+;; {:db/id #db/id[:db.part/db]
+;;  :db/ident :person/thaali-details
+;;  :db/valueType :db.type/ref
+;;  :db/cardinality :db.cardinality/many
+;;  :db/doc "Array of thaali details for each month for each thaali."
+;;  :db.install/_attribute :db.part/db}
 
 {:db/id #db/id[:db.part/db]
- :db/ident :mumin/hub-details
+ :db/ident :person/hub-details
  :db/valueType :db.type/ref
  :db/cardinality :db.cardinality/many
- :db/doc "Array of hub details for each month for each thaali."
+ :db/doc "Array of hub details for each person."
  :db.install/_attribute :db.part/db}
 
-;; ;;Address
+;;Address
 
  {:db/id #db/id[:db.part/db]
   :db/ident :address/city
@@ -126,6 +142,41 @@
   :db/doc "Street Address"
  :db.install/_attribute :db.part/db}
 
+{:db/id #db/id[:db.part/db]
+ :db/ident :address/incharge
+ :db/valueType :db.type/ref
+ :db/cardinality :db.cardinality/one
+ :db/doc "A person incharge for the residence"
+ :db.install/_attribute :db.part/db}
+
+{:db/id #db/id[:db.part/db]
+ :db/ident :address/incharge
+ :db/valueType :db.type/ref
+ :db/cardinality :db.cardinality/one
+ :db/doc "A person incharge for the residence"
+ :db.install/_attribute :db.part/db}
+
+{:db/id #db/id[:db.part/db]
+ :db/ident :address/incharge
+ :db/valueType :db.type/ref
+ :db/cardinality :db.cardinality/one
+ :db/doc "A person incharge for the residence"
+ :db.install/_attribute :db.part/db}
+
+{:db/id #db/id[:db.part/db]
+ :db/ident :address/single-thaalis
+ :db/valueType :db.type/long
+ :db/cardinality :db.cardinality/one
+ :db/doc "# of single thaalis being taken at the given address"
+ :db.install/_attribute :db.part/db}
+
+{:db/id #db/id[:db.part/db]
+ :db/ident :address/double-thaalis
+ :db/valueType :db.type/long
+ :db/cardinality :db.cardinality/one
+ :db/doc "# of double thaalis being taken at the given address"
+ :db.install/_attribute :db.part/db}
+
 ;;education
 
 {:db/id #db/id[:db.part/db]
@@ -166,13 +217,6 @@
 ;;thaali
 
 {:db/id #db/id[:db.part/db]
- :db/ident :thaali/address
- :db/valueType :db.type/ref
- :db/cardinality :db.cardinality/one
- :db/doc "Delivery Address of the Thaali"
- :db.install/_attribute :db.part/db}
-
-{:db/id #db/id[:db.part/db]
  :db/ident :thaali/size
  :db/valueType :db.type/ref
  :db/cardinality :db.cardinality/one
@@ -187,8 +231,20 @@
  :db/ident :thaali/num
  :db/valueType :db.type/string
  :db/cardinality :db.cardinality/one
+ :db/unique :db.unique/identity
  :db/doc "Thaali Number"
  :db.install/_attribute :db.part/db}
+
+{:db/id #db/id[:db.part/db]
+ :db/ident :thaali/delivery-mode
+ :db/valueType :db.type/ref
+ :db/cardinality :db.cardinality/one
+ :db/doc "The mode by which thaali is delivered."
+ :db.install/_attribute :db.part/db}
+
+;; thaali/delivery-mode enum values
+[:db/add #db/id[:db.part/user] :db/ident :thaali.delivery-mode/pickup]
+[:db/add #db/id[:db.part/user] :db/ident :thaali.delivery-mode/transported]
 
 {:db/id #db/id[:db.part/db]
  :db/ident :thaali/delivered-by
@@ -197,11 +253,75 @@
  :db/doc "Delivery service provided by."
  :db.install/_attribute :db.part/db}
 
-;; thaali/delivery-person enum values
-[:db/add #db/id[:db.part/user] :db/ident :thaali.delivered-by/husain-bhai]
-[:db/add #db/id[:db.part/user] :db/ident :thaali.delivered-by/qaizar-bhai]
-[:db/add #db/id[:db.part/user] :db/ident :thaali.delivered-by/javed-bhai]
-[:db/add #db/id[:db.part/user] :db/ident :thaali.delivered-by/saifi-bhai]
+{:db/id #db/id[:db.part/db]
+ :db/ident :thaali/caterer
+ :db/valueType :db.type/ref
+ :db/cardinality :db.cardinality/one
+ :db/doc "The caterer providing the thaali."
+ :db.install/_attribute :db.part/db}
+
+{:db/id #db/id[:db.part/db]
+ :db/ident :thaali/remarks
+ :db/valueType :db.type/string
+ :db/cardinality :db.cardinality/one
+ :db/doc "Any relavent remarks"
+ :db.install/_attribute :db.part/db}
+
+{:db/id #db/id[:db.part/db]
+ :db/ident :thaali/skip-dates
+ :db/valueType :db.type/boolean
+ :db/cardinality :db.cardinality/many
+ :db/doc "Dates on which it was informed that thaali is not to be prepared."
+ :db.install/_attribute :db.part/db}
+
+{:db/id #db/id[:db.part/db]
+ :db/ident :thaali/not-picked-dates
+ :db/valueType :db.type/boolean
+ :db/cardinality :db.cardinality/many
+ :db/doc "Dates on which thaali was not picked up."
+ :db.install/_attribute :db.part/db}
+
+{:db/id #db/id[:db.part/db]
+ :db/ident :thaali/started-on
+ :db/valueType :db.type/boolean
+ :db/cardinality :db.cardinality/one
+ :db/doc "Date thaali was started in the current month"
+ :db.install/_attribute :db.part/db}
+
+{:db/id #db/id[:db.part/db]
+ :db/ident :thaali/stopped-on
+ :db/valueType :db.type/boolean
+ :db/cardinality :db.cardinality/one
+ :db/doc "Date thaali was stopped in the current month. This is a long term stop. If for a few days, then enter in skip-dates."
+ :db.install/_attribute :db.part/db}
+
+;; ;; thaali/delivery-person enum values
+;; [:db/add #db/id[:db.part/user] :db/ident :thaali.delivered-by/husain-bhai]
+;; [:db/add #db/id[:db.part/user] :db/ident :thaali.delivered-by/qaizar-bhai]
+;; [:db/add #db/id[:db.part/user] :db/ident :thaali.delivered-by/javed-bhai]
+;; [:db/add #db/id[:db.part/user] :db/ident :thaali.delivered-by/saifi-bhai]
+;; [:db/add #db/id[:db.part/user] :db/ident :thaali.delivered-by/juzer-bhai]
+;; [:db/add #db/id[:db.part/user] :db/ident :thaali.delivered-by/abdeali-bhai]
+
+;; Common Elements
+
+{:db/id #db/id[:db.part/db]
+ :db/ident :common/tags
+ :db/valueType :db.type/string
+ :db/cardinality :db.cardinality/many
+ :db/doc "Tags that can be attached to a an entity"
+ :db.install/_attribute :db.part/db}
+
+{:db/id #db/id[:db.part/db]
+ :db/ident :common/roles
+ :db/valueType :db.type/string
+ :db/cardinality :db.cardinality/many
+ :db/doc "Roles that can be assigned to a person."
+ :db.install/_attribute :db.part/db}
+
+[:db/add #db/id[:db.part/user] :db/ident :common.roles/admin]
+[:db/add #db/id[:db.part/user] :db/ident :common.roles/transporter]
+[:db/add #db/id[:db.part/user] :db/ident :common.roles/khidmatguzar]
 
 {:db/id #db/id[:db.part/db]
  :db/ident :common/entity-type
@@ -238,43 +358,10 @@
  :db/doc "Month"
  :db.install/_attribute :db.part/db}
 
-[:db/add #db/id[:db.part/user] :db/ident :common.entity-type/mumin]
+[:db/add #db/id[:db.part/user] :db/ident :common.entity-type/person]
+[:db/add #db/id[:db.part/user] :db/ident :common.entity-type/address]
+[:db/add #db/id[:db.part/user] :db/ident :common.entity-type/vendor]
 [:db/add #db/id[:db.part/user] :db/ident :common.entity-type/thaali]
-
-{:db/id #db/id[:db.part/db]
- :db/ident :thaali/is-active?
- :db/valueType :db.type/boolean
- :db/cardinality :db.cardinality/one
- :db/doc "Denotes if the thaali is active."
- :db.install/_attribute :db.part/db}
-
-{:db/id #db/id[:db.part/db]
- :db/ident :thaali/remarks
- :db/valueType :db.type/string
- :db/cardinality :db.cardinality/one
- :db/doc "Any relavent remarks"
- :db.install/_attribute :db.part/db}
-
-{:db/id #db/id[:db.part/db]
- :db/ident :thaali/skip-dates
- :db/valueType :db.type/boolean
- :db/cardinality :db.cardinality/many
- :db/doc "Dates on which it was informed that thaali is not to be prepared."
- :db.install/_attribute :db.part/db}
-
-{:db/id #db/id[:db.part/db]
- :db/ident :thaali/not-picked-dates
- :db/valueType :db.type/boolean
- :db/cardinality :db.cardinality/many
- :db/doc "Dates on which thaali was not picked up."
- :db.install/_attribute :db.part/db}
-
-{:db/id #db/id[:db.part/db]
- :db/ident :thaali/started-on
- :db/valueType :db.type/boolean
- :db/cardinality :db.cardinality/one
- :db/doc "Date thaali was started in the current month"
- :db.install/_attribute :db.part/db}
 
 ;; Hub
 
@@ -312,4 +399,30 @@
  :db/cardinality :db.cardinality/one
  :db/doc "Hub Due Date"
  :db.install/_attribute :db.part/db}
+
+;; Vendors
+;; [:vendor/name :vendor/contacts [ref of persons] :vendor/address]
+
+{:db/id #db/id[:db.part/db]
+ :db/ident :vendor/name
+ :db/valueType :db.type/string
+ :db/unique :db.unique/identity
+ :db/cardinality :db.cardinality/one
+ :db/doc "Name of the vendor"
+ :db.install/_attribute :db.part/db}
+
+{:db/id #db/id[:db.part/db]
+ :db/ident :vendor/contact-persons
+ :db/valueType :db.type/ref
+ :db/cardinality :db.cardinality/many
+ :db/doc "Persons that will be associated as contacts for this vendor"
+ :db.install/_attribute :db.part/db}
+
+{:db/id #db/id[:db.part/db]
+ :db/ident :vendor/address
+ :db/valueType :db.type/ref
+ :db/cardinality :db.cardinality/one
+ :db/doc "Business address of the vendor"
+ :db.install/_attribute :db.part/db}
+
 ]

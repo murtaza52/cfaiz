@@ -6,7 +6,7 @@
 (def uri (atom "datomic:mem://faiz"))
 
 (def schema-path "src/faiz/schema.clj")
-(def data-path "src/faiz/sample-date.clj")
+(def data-path "src/faiz/sample-data.clj")
 
 
 ;; "datomic:free://localhost:4334/faiz"
@@ -19,10 +19,6 @@
 
 (def tempid (atom nil))
 
-(defn get-tempid
-  []
-  (reset! tempid (d/tempid :db.part/user)))
-
 (defn cr-en
   [m temp-id]
   (let [{:keys [db-after tempids]} (dt/trans [(assoc m :db/id temp-id)])
@@ -30,18 +26,27 @@
         en (d/entity db-after id)]
     {:id id :entity en}))
 
-(def m {:thaali/address 17592186045430
-  :thaali/size :thaali.size/half
-  :thaali/num "21"
-  :common/hijri-year 1434
-  :common/hijri-month "Rabi ul Awwal"
-  :common/gregorian-year 2013
-  :common/gregorian-month "December"})
+(def add-id 17592186045430)
+
+(def m  {
+         :mumin/address add-id
+         :mumin/thaali-details [17592186045428
+                                17592186045426]
+         :common/entity-type :common.entity-type/mumin
+         :mumin/first-name "Murtaza"
+         :mumin/middle-name "Fakhruddin"
+         :mumin/last-name "Badri"
+         :mumin/its "123456"})
+
+(defn register-mumin [m]
+  )
 
 (def e (cr-en m
               (d/tempid :db.part/user)))
 
-(println (-> e :entity :common/hijri-month))
+(println (-> e :entity :mumin/thaali-details))
+
+(println (map :common/hijri-month (-> e :entity :mumin/thaali-details)))
 
 (println (:entity e))
 
@@ -89,6 +94,9 @@
              :thaali/not-picked
              :thaali/start-date
              :thaali/stop-date])
+
+;; why is thaali address needed?
+;; why is isactive needed? isnt the thaali active only ?
 
 ;; where hub/received, received-on and received-by are arrays
 ;; a hub entity is created for each month for which hub is pledged. No
