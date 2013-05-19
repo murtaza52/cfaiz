@@ -1,4 +1,6 @@
 [
+ ;; add entities for transporters
+
  ;;address
  {:db/id #db/id[:db.part/user -1000001]
   :address/city "Poona"
@@ -13,18 +15,14 @@
   :thaali/size :thaali.size/half
   :thaali/num "21"
   :common/hijri-year 1434
-  :common/hijri-month "Moharram"
-  :common/gregorian-year 2013
-  :common/gregorian-month "December"}
+  :common/hijri-month "Moharram"}
 
  {:db/id #db/id[:db.part/user -1000003]
   :thaali/address #db/id[:db.part/user -1000001]
   :thaali/size :thaali.size/half
   :thaali/num "21"
   :common/hijri-year 1434
-  :common/hijri-month "Rabi ul Awwal"
-  :common/gregorian-year 2013
-  :common/gregorian-month "December"}
+  :common/hijri-month "Rabi ul Awwal"}
 
  ;;hub
  {:db/id #db/id[:db.part/user -1000004]
