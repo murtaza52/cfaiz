@@ -64,7 +64,7 @@
 
 {:db/id #db/id[:db.part/db]
   :db/ident :person/mobile
-  :db/valueType :db.type/long
+  :db/valueType :db.type/string
   :db/cardinality :db.cardinality/many
   :db/unique :db.unique/identity
   :db/doc "Mobile numbers of the person."
@@ -83,13 +83,6 @@
  :db/cardinality :db.cardinality/one
  :db/doc "Address of the person"
  :db.install/_attribute :db.part/db}
-
-;; {:db/id #db/id[:db.part/db]
-;;  :db/ident :person/thaali-details
-;;  :db/valueType :db.type/ref
-;;  :db/cardinality :db.cardinality/many
-;;  :db/doc "Array of thaali details for each month for each thaali."
-;;  :db.install/_attribute :db.part/db}
 
 {:db/id #db/id[:db.part/db]
  :db/ident :person/hub-details
@@ -164,17 +157,10 @@
  :db.install/_attribute :db.part/db}
 
 {:db/id #db/id[:db.part/db]
- :db/ident :address/single-thaalis
- :db/valueType :db.type/long
- :db/cardinality :db.cardinality/one
- :db/doc "# of single thaalis being taken at the given address"
- :db.install/_attribute :db.part/db}
-
-{:db/id #db/id[:db.part/db]
- :db/ident :address/double-thaalis
- :db/valueType :db.type/long
- :db/cardinality :db.cardinality/one
- :db/doc "# of double thaalis being taken at the given address"
+ :db/ident :address/thaali-details
+ :db/valueType :db.type/ref
+ :db/cardinality :db.cardinality/many
+ :db/doc "A vector of thaali details for each month for each thaali."
  :db.install/_attribute :db.part/db}
 
 ;;education
@@ -213,8 +199,9 @@
  :db/cardinality :db.cardinality/one
  :db/doc "Degree being Persued"
  :db.install/_attribute :db.part/db}
+;; [year, month, single, double, delivered, pick-up, delivered-by, started-on [], stoped-on [], skip - [[1 12/13/2013]]]
 
-;;thaali
+;;thaali-details
 
 {:db/id #db/id[:db.part/db]
  :db/ident :thaali/size
@@ -276,7 +263,7 @@
 
 {:db/id #db/id[:db.part/db]
  :db/ident :thaali/not-picked-dates
- :db/valueType :db.type/boolean
+ :db/valueType :db.type/string
  :db/cardinality :db.cardinality/many
  :db/doc "Dates on which thaali was not picked up."
  :db.install/_attribute :db.part/db}
@@ -294,14 +281,6 @@
  :db/cardinality :db.cardinality/one
  :db/doc "Date thaali was stopped in the current month. This is a long term stop. If for a few days, then enter in skip-dates."
  :db.install/_attribute :db.part/db}
-
-;; ;; thaali/delivery-person enum values
-;; [:db/add #db/id[:db.part/user] :db/ident :thaali.delivered-by/husain-bhai]
-;; [:db/add #db/id[:db.part/user] :db/ident :thaali.delivered-by/qaizar-bhai]
-;; [:db/add #db/id[:db.part/user] :db/ident :thaali.delivered-by/javed-bhai]
-;; [:db/add #db/id[:db.part/user] :db/ident :thaali.delivered-by/saifi-bhai]
-;; [:db/add #db/id[:db.part/user] :db/ident :thaali.delivered-by/juzer-bhai]
-;; [:db/add #db/id[:db.part/user] :db/ident :thaali.delivered-by/abdeali-bhai]
 
 ;; Common Elements
 
@@ -361,7 +340,6 @@
 [:db/add #db/id[:db.part/user] :db/ident :common.entity-type/person]
 [:db/add #db/id[:db.part/user] :db/ident :common.entity-type/address]
 [:db/add #db/id[:db.part/user] :db/ident :common.entity-type/vendor]
-[:db/add #db/id[:db.part/user] :db/ident :common.entity-type/thaali]
 
 ;; Hub
 

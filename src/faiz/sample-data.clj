@@ -1,5 +1,63 @@
 [
  ;; add entities for transporters
+ {:db/id #db/id[:db.part/user -1000011]
+  :common/entity-type :common.entity-type/person
+  :person/first-name "Juzer"
+  :person/mobile}
+
+ {:db/id #db/id[:db.part/user -1000012]
+  :common/entity-type :common.entity-type/person
+  :person/first-name "Husain"
+  :person/mobile}
+
+ {:db/id #db/id[:db.part/user -1000013]
+  :common/entity-type :common.entity-type/person
+  :person/first-name "Qaizar"
+  :person/mobile}
+
+ {:db/id #db/id[:db.part/user -1000014]
+  :common/entity-type :common.entity-type/person
+  :person/first-name "Abdeali"
+  :person/mobile}
+
+ {:db/id #db/id[:db.part/user -1000015]
+  :common/entity-type :common.entity-type/person
+  :person/first-name "Javed"
+  :person/mobile}
+
+ {:db/id #db/id[:db.part/user -1000016]
+  :common/entity-type :common.entity-type/person
+  :person/first-name "Saifi"
+  :person/mobile}
+
+ ;; person entities for vendors
+
+ {:db/id #db/id[:db.part/user -1000017]
+  :common/entity-type :common.entity-type/person
+  :person/first-name "Husain"
+  :person/last-name "Firangi"
+  :person/mobile "8087416392"}
+
+ {:db/id #db/id[:db.part/user -1000018]
+  :common/entity-type :common.entity-type/person
+  :person/first-name "Zohair"
+  :person/last-name "Rampurwala"
+  :person/mobile "9823086312"}
+
+ ;; add entities for vendors
+ {:db/id #db/id[:db.part/user -1000019]
+  :common/entity-type :common.entity-type/vendor
+  :vendor/name "Hakimee Caterers"
+  :vendor/contact-persons [#db/id[:db.part/user -1000018]]}
+
+  {:db/id #db/id[:db.part/user -1000020]
+  :common/entity-type :common.entity-type/vendor
+  :vendor/name "Firangi Caterers"
+  :vendor/contact-persons [#db/id[:db.part/user -1000017]]}
+
+
+ ;; add entities for khidmatguzaars
+
 
  ;;address
  {:db/id #db/id[:db.part/user -1000001]
@@ -54,8 +112,7 @@
    :mumin/first-name "Murtaza"
    :mumin/middle-name "Fakhruddin"
    :mumin/last-name "Badri"
-   :mumin/its "123456"}
-  ]
+   :mumin/its "123456"}]
 
 (comment
   (defn x
