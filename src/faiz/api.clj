@@ -8,23 +8,61 @@
 (def schema-path "src/faiz/schema.clj")
 (def data-path "src/faiz/sample-data.clj")
 
-
 ;; "datomic:free://localhost:4334/faiz"
 ;; "datomic:mem://faiz"
 
 (dt/init @uri)
 
-(dt/refresh-schema schema-path)
-(dt/refresh-schema data-path)
+(dt/populate-data schema-path)
+(dt/populate-data data-path)
 
-(def tempid (atom nil))
+(dt/cr-en {:contact/mobile "9923109052"})
 
-(defn cr-en
-  [m temp-id]
-  (let [{:keys [db-after tempids]} (dt/trans [(assoc m :db/id temp-id)])
-        id (d/resolve-tempid db-after tempids temp-id)
-        en (d/entity db-after id)]
-    {:id id :entity en}))
+(def e (dt/find-en '[:find ?e
+                          :in $ ?num
+                          :where
+                          [?e :contact/mobile ?num]]
+                   "9923589052"))
+
+(map #(keys %) e)
+
+(pprint (->
+            keys))
+
+(dt/update-datom {:db/id 17592186045465 :contact/email "c" :contact/mobile "9923589052" :person/watan "Rampura"})
+
+
+(def active-students '[:find ?e
+                       :in $ [?month ?year]
+                       :where
+                       [?e :common/entity-type :common.entity-type/person]
+                       [?e :person/address ?a]
+                       [?a :address/thaali-details ?t]
+                       [?t :common/hijri-year ?year]
+                       [?t :common/hijri-month ?month]])
+
+(pprint (dt/en '[:find ?e
+         :where [?e :common/entity-type :common.entity-type/address]]))
+
+;; create a new student
+;; change details of an existing student
+
+;; for creation of new entities a map will be received from the client.
+;; It will contain the appropriate :entity-type. Any ref will also contain the appropriate references.
+
+;; any updates received from the client side will be in the following format {:db/id 1234 :field-name val :field2 val2}. Only the fields to be updated are provided.
+
+(-> (dt/cr-en {:person/first-name "test1" :person/address 17592186045488}) :entity :person/address :address/flat)
+
+(def find-active-students (partial dt/en active-students))
+
+(find-active-students ["Rabi ul Awwal" 1434])
+
+
+
+(dt/upsert-en {:})
+
+
 
 (def add-id 17592186045430)
 
@@ -82,7 +120,7 @@
 ;; 4) A new entity will be created if the thaali size is changed. Thus
 ;; for a given month there could be muliple thaali entities for a
 ;; given person.
-(def thaali [:thaali/address
+(def thaali [
              :thaali/size
              :thaali/num
              :thaali/delivered-by
@@ -95,70 +133,7 @@
              :thaali/start-date
              :thaali/stop-date])
 
-;; why is thaali address needed?
-;; why is isactive needed? isnt the thaali active only ?
-
 ;; where hub/received, received-on and received-by are arrays
 ;; a hub entity is created for each month for which hub is pledged. No
 ;; connection with thaali. If sum of amount received is less than
 ;; pledged then due.
-(def hub [:hub/pledged
-          :common/hijri-month
-          :common/hijri-year
-          :hub/amount-received
-          :hub/received-on
-          :hub/received-by
-          :hub/due-date])
-
-(defn new-address [] 1)
-
-(defn new-thaali [] 1)
-
-(defn new-hub [] 1)
-
-(def register-mumin (partial dt/new-entity :common.entity-type/mumin mumin))
-
-(def find-mumin (partial dt/get-entity :common.entity-type/mumin :mumin/its))
-
-(comment
-  (register-mumin ["Batul2" "M Murtaza2" "Rampurawala2" "Pune2" "Rampura2" "2035940257" "2" "1ac3"])
-(-> (find-mumin "203594022") :mumin/its-jamaat)
-)
-
-(comment
-  (def res (datomic/q '[:find ?id
-                      :where [?id :common/entity-type]] (datomic/db @dt/conn)))
-
-(def en (datomic/entity (datomic/db @dt/conn) (ffirst res)))
-
-(:mumin/its en)
-
-
-(def res2 (datomic/q '[:find ?id
-                       :where
-                       [?id :common/entity-type :common.entity-type/mumin]
-                       [?id :mumin/its "203594022"]]
-                (datomic/db @dt/conn)))
-
-(def en2 (datomic/entity (datomic/db @dt/conn) (ffirst res2)))
-
-(:mumin/its en2)
-
-(def res3 (datomic/q '[:find ?id
-                       :in $ [?entity-type ?id-field ?id-num]
-                       :where
-                       [?id :common/entity-type ?entity-type]
-                       [?id ?id-field ?id-num]]
-                     (datomic/db @dt/conn)
-                     [:common.entity-type/mumin :mumin/its "203594022"]))
-
-(def en3 (datomic/entity (datomic/db @dt/conn) (ffirst res3)))
-
-(:mumin/its en3)
-
-(def find-mumin (partial dt/find-entity :common.entity-type/mumin :mumin/its))
-
-(def mumin (find-mumin "203594022"))
-
-(pprint (ffirst mumin))
-)

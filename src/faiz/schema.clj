@@ -55,19 +55,10 @@
   :db.install/_attribute :db.part/db}
 
 {:db/id #db/id[:db.part/db]
-  :db/ident :person/email
-  :db/valueType :db.type/string
+  :db/ident :person/contact-details
+  :db/valueType :db.type/ref
   :db/cardinality :db.cardinality/many
-  :db/unique :db.unique/identity
-  :db/doc "Email Addresses of the person."
-  :db.install/_attribute :db.part/db}
-
-{:db/id #db/id[:db.part/db]
-  :db/ident :person/mobile
-  :db/valueType :db.type/string
-  :db/cardinality :db.cardinality/many
-  :db/unique :db.unique/identity
-  :db/doc "Mobile numbers of the person."
+  :db/doc "An array of different contacts of the given person."
   :db.install/_attribute :db.part/db}
 
 {:db/id #db/id[:db.part/db]
@@ -75,7 +66,7 @@
   :db/valueType :db.type/string
   :db/cardinality :db.cardinality/one
   :db/doc "The id / token returned by the Open ID Provider"
-  :db.instal/_attribute :db.part/db}
+  :db.install/_attribute :db.part/db}
 
 {:db/id #db/id[:db.part/db]
  :db/ident :person/address
@@ -293,7 +284,7 @@
 
 {:db/id #db/id[:db.part/db]
  :db/ident :common/roles
- :db/valueType :db.type/string
+ :db/valueType :db.type/ref
  :db/cardinality :db.cardinality/many
  :db/doc "Roles that can be assigned to a person."
  :db.install/_attribute :db.part/db}
@@ -301,6 +292,7 @@
 [:db/add #db/id[:db.part/user] :db/ident :common.roles/admin]
 [:db/add #db/id[:db.part/user] :db/ident :common.roles/transporter]
 [:db/add #db/id[:db.part/user] :db/ident :common.roles/khidmatguzar]
+[:db/add #db/id[:db.part/user] :db/ident :common.roles/caterer]
 
 {:db/id #db/id[:db.part/db]
  :db/ident :common/entity-type
@@ -401,6 +393,31 @@
  :db/valueType :db.type/ref
  :db/cardinality :db.cardinality/one
  :db/doc "Business address of the vendor"
+ :db.install/_attribute :db.part/db}
+
+;; contacts-details
+
+{:db/id #db/id[:db.part/db]
+ :db/ident :contact/type
+ :db/valueType :db.type/ref
+ :db/cardinality :db.cardinality/one
+ :db/doc "Type of the contact"
+ :db.install/_attribute :db.part/db}
+
+{:db/id #db/id[:db.part/db]
+ :db/ident :contact/mobile
+ :db/valueType :db.type/string
+ :db/cardinality :db.cardinality/one
+ :db/unique :db.unique/identity
+ :db/doc "mobile number"
+ :db.install/_attribute :db.part/db}
+
+{:db/id #db/id[:db.part/db]
+ :db/ident :contact/email
+ :db/valueType :db.type/string
+ :db/cardinality :db.cardinality/one
+ :db/unique :db.unique/identity
+ :db/doc "email address"
  :db.install/_attribute :db.part/db}
 
 ]

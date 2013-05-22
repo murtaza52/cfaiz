@@ -30,54 +30,41 @@
   [t]
   @(d/transact @conn t))
 
-(defn refresh-schema
-  "Refreshes the schema"
+(defn populate-data
+  "Populates data in the db"
   [path]
   (let [schema (read-string (slurp path))]
     (trans schema)))
 
-(defn create-entity
-  [entity]
-  (fn
-    [m]
-    (let[id (d/tempid :db.part/user)
-       nm (assoc m :common/entity-type entity
-                   :db/id id)]
-       (trans [nm]))))
-
-(defn new-entity
-  [en k v]
-  (let [m (zipmap k v)
-        f (create-entity en)]
-    (f m)))
+(defn cr-en
+  [m]
+  (let [temp-id (d/tempid :db.part/user)
+        {:keys [db-after tempids]} (trans [(assoc m :db/id temp-id)])
+        id (d/resolve-tempid db-after tempids temp-id)
+        en (d/entity db-after id)]
+    {:id id :entity en}))
 
 ;; #Functions for querying data
 ;;
 
-(defn query
+(defn qu
   "Function for querying"
-  [query-vector params]
-  (q query-vector
-     (db @conn)
-     params))
+  ([v]
+     (q v
+        (db @conn)))
+  ([v & p]
+     (apply q v
+            (db @conn)
+            p)))
 
-(defn find-entity
-  [entity-type id-field id-num]
-  (query '[:find ?id
-           :in $ [?entity-type ?id-field ?id-num]
-           :where
-           [?id :common/entity-type ?entity-type]
-           [?id ?id-field ?id-num]]
-         [entity-type id-field id-num]))
+(defn id->en
+  [id]
+  (-> @conn db (d/entity id)))
 
-(defn get-entity
-  [entity-type id-field id-num]
-  (let [entity-id (find-entity entity-type id-field id-num)
-        entity (d/entity (db @conn) (ffirst entity-id))]
-    entity))
+(defn find-en
+  [& p]
+  (map #(id->en (first %)) (apply qu p)))
 
-(comment
- ;;testing
-
-
- )
+(defn update-datom
+  [m]
+  (trans [m]))
